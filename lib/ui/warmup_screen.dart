@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:badminton_lesson_plan/ui/drill.dart';
 
 class WarmupScreen extends StatefulWidget {
   final int minutes;
@@ -30,14 +31,28 @@ class WarmupScreenState extends State<WarmupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Warmup Timer'),
-      ),
-      body: Center(
-          child: Text(
-        durationToString(duration),
-      )),
-    );
+        appBar: AppBar(
+          title: Text('Warmup Timer'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            children: <Widget>[
+              Text(
+                durationToString(duration),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  RaisedButton(onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => DrillScreen()));
+                  })
+                ],
+              )
+            ],
+          ),
+        ));
   }
 
   String durationToString(Duration duration) {
