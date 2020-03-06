@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:badminton_lesson_plan/ui/drill_screen.dart';
+import 'package:badminton_lesson_plan/ui/add_drill_screen.dart';
+import 'package:badminton_lesson_plan/helpers/drill.dart';
 
 class FieldScreen extends StatefulWidget {
   final int total;
@@ -16,6 +17,13 @@ class FieldScreen extends StatefulWidget {
 
 class FieldScreenState extends State<FieldScreen> {
   int total;
+  int wu = 0;
+  int fw = 0;
+  int drillTime = 0;
+  int serve = 0;
+  int game = 0;
+  List<Drill> loDrill = [];
+  List<int> loDuration = [];
   final TextEditingController _wuController = TextEditingController();
   final TextEditingController _fwController = TextEditingController();
   final TextEditingController _serveController = TextEditingController();
@@ -23,39 +31,174 @@ class FieldScreenState extends State<FieldScreen> {
 
   FieldScreenState(this.total);
 
+  int sumDrill (List<int> lod) {
+    int sum = 0;
+    for (int i = 0; i < lod.length; i++){
+      sum += lod[i];
+    }
+    return sum;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
         appBar: AppBar(title: Text('Enter Fields:')),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 16, 4),
+                //padding: const EdgeInsets.fromLTRB(0, 0, 16, 4),
                 child: Text(
-                  'Unallocated Time:  ' + total.toString() + '  minutes',
+                  'Unallocated Time:  ' +
+                      (total - (wu + fw + sumDrill(loDuration) + serve + game)).toString() +
+                      '  minutes',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                   ),
                 ),
               ),
+              Container(
+                height: 8,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Warmup Time:'),
-                  TextField(
-                    controller: _wuController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ]
+                  Text('Warmup Time:  '),
+                  Expanded(
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: _wuController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      onSubmitted: (str) => setState(() {
+                        wu = (int.parse(str));
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Footwork Time:  '),
+                  Expanded(
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: _fwController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      onSubmitted: (str) => setState(() {
+                        fw = (int.parse(str));
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Add Drill'),
+                  IconButton(icon: Icon(Icons.add), 
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddDrill(loDrill, loDuration))
+                    );
+                  }
+                  )
+                ],
+              ),
+              new Expanded (
+                 child: new ListView.builder(
+                  itemCount: loDrill.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new DispDrill(loDrill[index], loDuration[index]);
+                  }
+                )
+              ),
+              Container(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Serving Time:  '),
+                  Expanded(
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: _serveController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      onSubmitted: (str) => setState(() {
+                        serve = (int.parse(str));
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Game Time:  '),
+                  Expanded(
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: _gameController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      onSubmitted: (str) => setState(() {
+                        game = (int.parse(str));
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+              Container (
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text('Start'),
+                    onPressed: null
                   )
                 ],
               )
             ],
           ),
         ));
+  }
+}
+
+class DispDrill extends StatelessWidget {
+  final Drill _drill;
+  final int _duration;
+
+  DispDrill(this._drill, this._duration);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(_drill.name + ': ' + _duration.toString());
   }
 }
