@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:badminton_lesson_plan/ui/warmup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:badminton_lesson_plan/ui/drill_screen.dart';
 import 'package:badminton_lesson_plan/ui/add_drill_screen.dart';
 import 'package:badminton_lesson_plan/helpers/drill.dart';
+import 'package:badminton_lesson_plan/helpers/drill_type.dart';
 
 class FieldScreen extends StatefulWidget {
   final int total;
@@ -181,7 +184,12 @@ class FieldScreenState extends State<FieldScreen> {
                 children: <Widget>[
                   RaisedButton(
                     child: Text('Start'),
-                    onPressed: null
+                    onPressed: (total - (wu + fw + sumDrill(loDuration) + serve + game) != 0) ?
+                    null : () {
+                      Navigator.push(context, 
+                        MaterialPageRoute(builder: (context) => WarmupScreen(minutes: wu,),)
+                      );
+                    }
                   )
                 ],
               )
@@ -199,6 +207,26 @@ class DispDrill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(_drill.name + ': ' + _duration.toString());
+    //return Text(_drill.name + ': ' + _duration.toString());
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              _drill.numPlayers.toString() + ' People'
+            ),
+            Text(
+              _drill.drillType == DrillType.offensive? 'Offensive' :
+              _drill.drillType == DrillType.defensive? 'Defensive' : 'Mixed'
+            ),
+            Text(
+              'Duration: ' + _duration.toString() + ' Minutes',
+            )
+          ]
+        ),
+      ),
+    );
   }
 }

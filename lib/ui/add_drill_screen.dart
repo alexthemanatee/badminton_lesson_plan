@@ -84,7 +84,7 @@ class AddDrillState extends State<AddDrill> {
                   ),
                   RaisedButton(
                     onPressed: changeBoth,
-                    child: Text('Both'),
+                    child: Text('Mixed'),
                     color: (activeType == 3) ? Colors.red : Colors.grey,
                   ),
                 ],

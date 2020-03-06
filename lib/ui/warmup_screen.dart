@@ -37,15 +37,20 @@ class WarmupScreenState extends State<WarmupScreen> {
         body: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Text(
                 durationToString(duration),
+                style: TextStyle(fontSize: 50),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(onPressed: () {
-                    Navigator.push(context,
+                  RaisedButton(
+                    child: Text('Continue'),
+                    onPressed: () {
+                      timer.cancel();
+                      Navigator.push(context,
                         MaterialPageRoute(builder: (context) => DrillScreen()));
                   })
                 ],
@@ -64,8 +69,10 @@ class WarmupScreenState extends State<WarmupScreen> {
     timer = new Timer.periodic(
         oneSec,
         (timer) => setState(() {
-              if (duration.isNegative) {
+              if (duration.inSeconds == 0) {
                 timer.cancel();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DrillScreen()));
               } else {
                 duration -= oneSec;
               }
