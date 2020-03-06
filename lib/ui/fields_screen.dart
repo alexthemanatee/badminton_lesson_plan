@@ -39,7 +39,6 @@ class FieldScreenState extends State<FieldScreen> {
                 ),
               ),
             ),
-            Container()//comment
           ],
         ),
       )

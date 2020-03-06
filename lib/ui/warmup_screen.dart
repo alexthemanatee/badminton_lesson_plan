@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:badminton_lesson_plan/ui/drill.dart';
+import 'package:badminton_lesson_plan/ui/drill_screen.dart';
 
 class WarmupScreen extends StatefulWidget {
   final int minutes;
