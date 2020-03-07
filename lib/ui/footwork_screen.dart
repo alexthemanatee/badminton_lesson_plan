@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:badminton_lesson_plan/ui/drill_screen.dart';
 import 'package:badminton_lesson_plan/ui/serve_screen.dart';
@@ -39,6 +39,18 @@ class FootworkScreenState extends State<FootworkScreen> {
     startTimer();
   }
 
+  List<String> _fw = [
+    'Shuttle Run',
+    'Forwards and Backwards Bird Throws',
+    'Partner Pointing',
+    'Side to Side Follow the Leader',
+    'Flick Serve Return',
+    'Intercept'
+  ];
+  static int _fwLength = 6;
+  static Random random = new Random();
+  int randomIndex = random.nextInt(_fwLength);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +65,15 @@ class FootworkScreenState extends State<FootworkScreen> {
               Text(
                 durationToString(duration),
                 style: TextStyle(fontSize: 50),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    _fw[randomIndex],
+                    style: TextStyle(fontSize: 20),
+                  )
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +112,7 @@ class FootworkScreenState extends State<FootworkScreen> {
     timer = new Timer.periodic(
         oneSec,
         (timer) => setState(() {
-              if (duration.inSeconds == 0) {
+              if (duration.inSeconds <= 0) {
                 timer.cancel();
                 (loDrill.isEmpty)
                     ? Navigator.pushAndRemoveUntil(

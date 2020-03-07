@@ -81,7 +81,7 @@ class WarmupScreenState extends State<WarmupScreen> {
     timer = new Timer.periodic(
         oneSec,
         (timer) => setState(() {
-              if (duration.inSeconds == 0) {
+              if (duration.inSeconds <= 0) {
                 timer.cancel();
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) => FootworkScreen(fw, loDrill, loDur, serve, game)),

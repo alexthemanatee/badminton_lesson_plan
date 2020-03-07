@@ -85,7 +85,7 @@ class DrillScreenState extends State<DrillScreen> {
                       child: Text('Continue'),
                       onPressed: () {
                         timer.cancel();
-                        (loDrill.length - 1 == index)
+                        (index == loDrill.length - 1)
                             ? Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -96,7 +96,7 @@ class DrillScreenState extends State<DrillScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => DrillScreen(
-                                        index++, loDrill, loDur, serve, game)),
+                                        ++index, loDrill, loDur, serve, game)),
                                 ModalRoute.withName('/'));
                       }),
                 ],
@@ -115,7 +115,7 @@ class DrillScreenState extends State<DrillScreen> {
     timer = new Timer.periodic(
         oneSec,
         (timer) => setState(() {
-              if (duration.inSeconds == 0) {
+              if (duration.inSeconds <= 0) {
                 timer.cancel();
                 (loDrill.length - 1 == index)
                     ? Navigator.pushAndRemoveUntil(

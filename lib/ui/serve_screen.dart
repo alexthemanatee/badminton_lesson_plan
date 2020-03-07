@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:badminton_lesson_plan/ui/game_screen.dart';
 
@@ -29,6 +29,19 @@ class ServeScreenState extends State<ServeScreen> {
     startTimer();
   }
 
+  List<String> _serves = [
+    'Doubles Serve',
+    'Flick Serve',
+    'Singles Underhand',
+    'Serve Return Singles',
+    'Serve Return Doubles Flick',
+    'Serve Return Doubles to Center',
+    'Serve Return Doubles to Side'
+  ];
+  static int _servesLength = 7;
+  static Random random = new Random();
+  int randomIndex = random.nextInt(_servesLength);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +56,15 @@ class ServeScreenState extends State<ServeScreen> {
               Text(
                 durationToString(duration),
                 style: TextStyle(fontSize: 50),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    _serves[randomIndex],
+                    style: TextStyle(fontSize: 20),
+                  )
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
