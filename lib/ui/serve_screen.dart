@@ -1,34 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:badminton_lesson_plan/ui/footwork_screen.dart';
-import'package:badminton_lesson_plan/helpers/drill.dart';
+import 'package:badminton_lesson_plan/ui/game_screen.dart';
 
-class WarmupScreen extends StatefulWidget {
+class ServeScreen extends StatefulWidget {
   final int minutes;
-  final int fw;
-  final List<Drill> loDrill;
-  final List<int> loDur;
-  final int serve;
   final int game;
 
-  WarmupScreen(this.minutes, this.fw, this.loDrill, this.loDur, this.serve, this.game);
+  ServeScreen(this.minutes, this.game);
 
   @override
-  State<StatefulWidget> createState() => WarmupScreenState(minutes, fw, loDrill, loDur, serve, game);
+  State<StatefulWidget> createState() => ServeScreenState(minutes, game);
 }
 
-class WarmupScreenState extends State<WarmupScreen> {
+class ServeScreenState extends State<ServeScreen> {
   Duration duration;
   int minutes;
   Timer timer;
-  final int fw;
-  final List<Drill> loDrill;
-  final List<int> loDur;
-  final int serve;
   final int game;
 
-  WarmupScreenState(this.minutes, this.fw, this.loDrill, this.loDur, this.serve, this.game) {
+  ServeScreenState(this.minutes, this.game) {
     duration = new Duration(minutes: minutes);
   }
 
@@ -42,7 +33,7 @@ class WarmupScreenState extends State<WarmupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Warmup Timer'),
+          title: Text('Serve Timer'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -61,7 +52,7 @@ class WarmupScreenState extends State<WarmupScreen> {
                     onPressed: () {
                       timer.cancel();
                       Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: (context) => FootworkScreen(fw, loDrill, loDur, serve, game)),
+                        MaterialPageRoute(builder: (context) => GameScreen(game)),
                         ModalRoute.withName('/')
                       );
                   }),
@@ -84,7 +75,7 @@ class WarmupScreenState extends State<WarmupScreen> {
               if (duration.inSeconds == 0) {
                 timer.cancel();
                 Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) => FootworkScreen(fw, loDrill, loDur, serve, game)),
+                    MaterialPageRoute(builder: (context) => GameScreen(game)),
                     ModalRoute.withName('/')
                   );
               } else {

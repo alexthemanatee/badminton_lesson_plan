@@ -1,4 +1,3 @@
-import 'package:badminton_lesson_plan/ui/fields_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:badminton_lesson_plan/helpers/drill.dart';
 import 'package:badminton_lesson_plan/helpers/drill_type.dart';

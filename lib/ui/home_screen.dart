@@ -1,4 +1,3 @@
-import 'package:badminton_lesson_plan/ui/warmup_screen.dart';
 import 'package:badminton_lesson_plan/ui/fields_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +28,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             FlatButton(
-              child: Text("Click Me"),
+              child: Text("Go"),
               onPressed: () {
                 navigateToSubPage(context);
               },
@@ -40,6 +39,7 @@ class HomeScreen extends StatelessWidget {
 
   Future navigateToSubPage(context) async {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FieldScreen(int.parse(_durationController.text))));
+        context, MaterialPageRoute(builder: (context) => FieldScreen(int.parse(_durationController.text)))
+        );
   }
 }
