@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
         body: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
               textAlign: TextAlign.center,

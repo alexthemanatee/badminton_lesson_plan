@@ -106,7 +106,7 @@ class AddDrillState extends State<AddDrill> {
     ],
     [
       'Cross Net Shot',
-      'Feeder tosses the bird over with an underhand toss for part to do a cross net'
+      'Feeder tosses the bird over with an underhand toss for partner to do a cross net'
     ],
     [
       'In and Out Drop',
